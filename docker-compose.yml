@@ -1,0 +1,25 @@
+services:
+  dragonwilds:
+    platform: linux/amd64
+    build:
+      context: .
+      platforms:
+        - linux/amd64
+    container_name: rsdragonwilds-server
+    restart: unless-stopped
+    ports:
+      - "${SERVER_PORT:-7777}:7777/udp"
+    volumes:
+      - server-data:/opt/rsdragonwilds/RSDragonwilds/Saved
+    env_file:
+      - .env
+    environment:
+      - OWNER_ID=${OWNER_ID}
+      - SERVER_NAME=${SERVER_NAME:-My Dragonwilds Server}
+      - DEFAULT_WORLD_NAME=${DEFAULT_WORLD_NAME:-DefaultWorld}
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD}
+      - WORLD_PASSWORD=${WORLD_PASSWORD:-}
+      - SERVER_PORT=${SERVER_PORT:-7777}
+
+volumes:
+  server-data:
